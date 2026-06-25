@@ -1,0 +1,328 @@
+
+<style>
+  .tw{padding:1rem 0;font-size:14px}
+  .sl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--color-text-tertiary);margin:1.5rem 0 .5rem}
+  .dc{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:10px;overflow:hidden}
+  .dh{display:flex;align-items:center;gap:10px;padding:.6rem 1rem;border-bottom:.5px solid var(--color-border-tertiary);cursor:pointer;user-select:none}
+  .dh:hover{background:var(--color-background-secondary)}
+  .di{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dt{font-weight:500;font-size:14px;color:var(--color-text-primary);flex:1}
+  .dd{font-size:12px;color:var(--color-text-secondary)}
+  .da{font-size:12px;color:var(--color-text-tertiary);transition:transform .2s}
+  .da.open{transform:rotate(90deg)}
+  .db{padding:.75rem 1rem;display:none}
+  .db.open{display:block}
+  .col-head{display:grid;grid-template-columns:26px 1fr 2fr;gap:4px 10px;margin-bottom:6px;padding-bottom:4px;border-bottom:.5px solid var(--color-border-tertiary)}
+  .ch{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary)}
+  .trow{display:grid;grid-template-columns:26px 1fr 2fr;gap:5px 10px;margin-bottom:5px;align-items:start}
+  .tc{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding-top:4px;text-align:center}
+  .tag{font-size:12px;padding:3px 10px;border-radius:20px;white-space:nowrap;display:inline-block}
+  .tdesc{font-size:11px;color:var(--color-text-secondary);line-height:1.55}
+  .sub{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:12px 0 5px;border-top:.5px solid var(--color-border-tertiary);padding-top:8px}
+  .sub:first-child{border-top:none;padding-top:0;margin-top:0}
+  .sp{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:12px}
+  .sd{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .warn{background:var(--color-background-warning);border-radius:var(--border-radius-md);padding:8px 12px;font-size:11px;color:var(--color-text-warning);margin-top:10px;display:flex;gap:8px;align-items:flex-start}
+  .pair{font-size:10px;color:var(--color-text-tertiary);font-style:italic;margin-top:2px}
+  .nb{font-size:10px;background:var(--color-background-info);color:var(--color-text-info);padding:1px 6px;border-radius:10px;margin-left:4px;font-weight:500;vertical-align:middle}
+</style>
+
+<div class="tw">
+  <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+    <h2 style="font-size:18px;margin:0;font-weight:500;color:var(--color-text-primary)">Pearl Care Center — Call Taxonomy</h2>
+    <span style="font-size:12px;color:var(--color-text-tertiary)">Master table · 33 tags · 5 dimensions</span>
+  </div>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 1.5rem">Click any dimension to expand · tag codes shown for reference</p>
+
+  <div class="sl">Layer 1 — Call Context</div>
+
+  <!-- D1 -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('d1')">
+      <div class="di" style="background:#E6F1FB"><i class="ti ti-phone-outgoing" style="color:#185FA5;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">D1 · Call direction <span style="font-size:12px;font-weight:400;color:var(--color-text-tertiary)">tags 1–4</span></div>
+        <div class="dd">Exactly 1 required · never blank · last resort = tag 4</div>
+      </div>
+      <span class="da" id="arr-d1">›</span>
+    </div>
+    <div class="db" id="d1">
+      <div class="col-head"><span class="ch">#</span><span class="ch">Tag value</span><span class="ch">AI tagging description</span></div>
+      <div class="trow">
+        <span class="tc">1</span>
+        <span class="tag" style="background:#E6F1FB;color:#0C447C">Outbound — practice</span>
+        <span class="tdesc">Initiated by Pearl; recipient is a provider practice. Tag if ANY true: (a) call placed to a practice number on record; (b) answering party identifies a clinic/practice name ('Kelly Medical,' 'doctor's office'); (c) answering party asks for patient name, DOB, or appt details without being prompted; (d) caller introduces herself for scheduling and responder acts as staff. Tiebreaker: D2=5 → D1 must be 1.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">2</span>
+        <span class="tag" style="background:#E6F1FB;color:#0C447C">Outbound — patient</span>
+        <span class="tdesc">Initiated by Pearl; recipient is the patient, a family member, or caregiver at a personal number. Use when: (a) call goes to a personal voicemail with an individual's name or generic personal greeting; (b) answering party identifies as patient or family member; (c) setting is clearly non-clinical (no clinic name, no scheduling language from responder). CAUTION: Do NOT tag if responder mentions the doctor's schedule or other patients. Tiebreaker: D2=6 → D1 must be 2.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">3</span>
+        <span class="tag" style="background:#EAF3DE;color:#27500A">Inbound — callback</span>
+        <span class="tdesc">Call received by Pearl — typically a patient or practice calling back after a voicemail. Rare in outbound MP3 dataset. Confirm via MP3 filename: 'Incoming' in filename = tag 3.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">4</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">Unidentifiable <span class="nb">new</span></span>
+        <span class="tdesc">Last resort — use only when ALL three are true: (a) fewer than 3 substantive transcript lines OR cuts off before any identifying content; (b) no clinic name, patient name, or scheduling language appears anywhere; (c) neither tag 1 nor 2 can be assigned with reasonable confidence. Examples: transcript = only 'this call is being recorded'; dead-air; call ends before caller speaks; dial-tone-only recordings. D1=4 forces D2=8 AND D3=18.</span>
+      </div>
+      <div class="warn"><i class="ti ti-alert-triangle" style="font-size:14px;flex-shrink:0;margin-top:1px"></i>Do NOT default to tag 2 (patient) just because the answering party says only 'hello' — practices often screen calls this way.</div>
+    </div>
+  </div>
+
+  <!-- D2 -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('d2')">
+      <div class="di" style="background:#EEEDFE"><i class="ti ti-users" style="color:#534AB7;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">D2 · Recipient type <span style="font-size:12px;font-weight:400;color:var(--color-text-tertiary)">tags 5–9</span></div>
+        <div class="dd">Exactly 1 required · who actually answered, not who was intended</div>
+      </div>
+      <span class="da" id="arr-d2">›</span>
+    </div>
+    <div class="db" id="d2">
+      <div class="col-head"><span class="ch">#</span><span class="ch">Tag value</span><span class="ch">AI tagging description</span></div>
+      <div class="trow">
+        <span class="tc">5</span>
+        <span class="tag" style="background:#EEEDFE;color:#3C3489">Practice staff</span>
+        <span class="tdesc">Call answered live by a staff member at the provider practice — receptionist, scheduler, nurse, or office manager. Strong signals: answers with clinic name; asks 'what is the patient's date of birth?'; says 'let me check the schedule'; refers to 'our patients' or 'our doctors.' Also tag when a practice screener connects caller to a live staff member who handles scheduling. D2=5 → D1 must be 1.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">6</span>
+        <span class="tag" style="background:#EEEDFE;color:#3C3489">Patient — direct or family</span>
+        <span class="tdesc">Call answered live by the patient themselves, or a family member or caregiver on their behalf. Strong signals: person answers with personal greeting AND caller addresses them by name and they confirm; identifies as patient's spouse, child, or caregiver. CAUTION: Do not tag when a practice receptionist answers with just 'hello' — confirm the person is clearly non-clinical. D2=6 → D1 must be 2.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">7</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">Voicemail</span>
+        <span class="tdesc">Call reached an automated voicemail system AND the Pearl caller left a COMPLETE message. Complete = caller name + hospital stay context + doctor name + Pearl callback number + closing ('thank you and have a great day'). Do NOT use if: voicemail box was full (→ tag 8); caller hung up before finishing (→ tag 8); message was cut off mid-sentence (→ tag 8).</span>
+      </div>
+      <div class="trow">
+        <span class="tc">8</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">IVR / hold / no answer</span>
+        <span class="tdesc">Use for any of the following: (a) call connected to an automated phone system, hold queue, or screener and caller did not reach a live person or successfully leave a voicemail; (b) voicemail box was full and no message could be left; (c) ringing with no answer and no voicemail option; (d) screener hold ending without resolution; (e) call too short or garbled to determine recipient (D1=4). Absorbs all cases where the call could not be meaningfully connected.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">9</span>
+        <span class="tag" style="background:#FCEBEB;color:#791F1F">Wrong number</span>
+        <span class="tdesc">Call answered by a clearly unintended party — non-medical business, unrelated individual, or automated recording that plays only a phone number. Examples: 'Michael Stevenson Legacy Insurance'; 'home and billing consultants'; 'telephone number 808-...' recordings. Always pair with D4=27.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl">Layer 2 — Call Outcome</div>
+
+  <!-- D3 -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('d3')">
+      <div class="di" style="background:#EAF3DE"><i class="ti ti-circle-check" style="color:#3B6D11;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">D3 · Primary outcome <span style="font-size:12px;font-weight:400;color:var(--color-text-tertiary)">tags 10–18</span></div>
+        <div class="dd">Exactly 1 required · apply in priority order 10→18 · stop at first match</div>
+      </div>
+      <span class="da" id="arr-d3">›</span>
+    </div>
+    <div class="db" id="d3">
+      <div class="col-head"><span class="ch">#</span><span class="ch">Tag value</span><span class="ch">AI tagging description</span></div>
+      <div class="sub">Converted</div>
+      <div class="trow">
+        <span class="tc">10</span>
+        <span class="tag" style="background:#EAF3DE;color:#27500A">Scheduled</span>
+        <span class="tdesc">1st priority. A follow-up appointment was confirmed or newly booked during this call. Evidence: practice staff commits to scheduling AND patient names/details received; OR patient/family explicitly agrees to a specific appointment. Practice taking patient names without committing to schedule → tag 21 (friction), not tag 10.</span>
+      </div>
+      <div class="sub">Already resolved</div>
+      <div class="trow">
+        <span class="tc">11</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Appt already done or booked</span>
+        <span class="tdesc">2nd priority. Call revealed a follow-up appointment already occurred or is already booked before Pearl's outreach — not reflected in the worklist. Evidence: 'I've already seen the doctor'; 'he rescheduled for May 7th'; 'we've got appointments in the works.' Tag 11 even if the patient is warm — the key is the appointment existed without Pearl's involvement. Always pair with D4=26.</span>
+      </div>
+      <div class="sub">Not converted</div>
+      <div class="trow">
+        <span class="tc">12</span>
+        <span class="tag" style="background:#FCEBEB;color:#791F1F">Patient declined assistance</span>
+        <span class="tdesc">3rd priority. Patient or family reached live and explicitly declined Pearl's scheduling help. Evidence: 'I don't need help'; 'I'm fine'; 'we can handle it'; 'no thank you.' Politeness does NOT change this tag. Do not confuse with tag 11 (appt already exists) or tag 13 (practice declines).</span>
+      </div>
+      <div class="trow">
+        <span class="tc">13</span>
+        <span class="tag" style="background:#FCEBEB;color:#791F1F">Practice declined to assist</span>
+        <span class="tdesc">4th priority. Practice staff reached live and declined to coordinate scheduling through Pearl. Evidence: 'patients call us directly'; 'she doesn't need help with that, we can do that'; 'we handle our own scheduling.' Distinct from tag 11 — practice is declining Pearl's involvement, not confirming an appointment exists.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">14</span>
+        <span class="tag" style="background:#FCEBEB;color:#791F1F">Could not reach / voicemail full</span>
+        <span class="tdesc">5th priority. Call connected but no message could be delivered. Use when: voicemail box is full ('the mailbox is full and cannot accept messages'); no voicemail system available; rings with no answer and no voicemail option. Key distinction from tag 16: was a message successfully recorded? If transcript contains 'mailbox is full' → tag 14, never tag 16.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">15</span>
+        <span class="tag" style="background:#FCEBEB;color:#791F1F">Caller abandoned</span>
+        <span class="tdesc">6th priority. Pearl caller disconnected before completing outreach — no voicemail left, no live conversation completed. Evidence: transcript ends abruptly after hold or screener's 'please stay on the line' with no subsequent message; caller hangs up mid-hold. Always pair with D4=20.</span>
+      </div>
+      <div class="sub">Unresolved</div>
+      <div class="trow">
+        <span class="tc">16</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">Voicemail left</span>
+        <span class="tdesc">7th priority. Caller successfully left a COMPLETE voicemail: caller name + hospital stay context + doctor name + Pearl callback number + closing ('thank you and have a great day'). Only use when fully delivered. Voicemail box full → tag 14. Caller hung up mid-hold → tag 15. Message cut off → tag 18.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">17</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">Follow-up arranged <span class="nb">new</span></span>
+        <span class="tdesc">8th priority. A specific mutual callback or follow-up commitment was made — practice asked to be called back at a specific time, or Pearl caller committed to calling back to check. Evidence: 'call us back tomorrow'; 'I'll call back to check.' Distinct from leaving a callback number in a voicemail — requires a two-way arrangement.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">18</span>
+        <span class="tag" style="background:#F1EFE8;color:#444441">Transferred / unclear</span>
+        <span class="tdesc">Last resort (9th). No determinable outcome after checking tags 10–17, OR D1=4 (Unidentifiable). Examples: 'your call has been forwarded' with no content; 'hello. hello.' exchanges; transcript = only 'this call is being recorded.' Always assigned when D1=4.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('d4')">
+      <div class="di" style="background:#FAECE7"><i class="ti ti-alert-triangle" style="color:#993C1D;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">D4 · Friction type <span style="font-size:12px;font-weight:400;color:var(--color-text-tertiary)">tags 19–29</span></div>
+        <div class="dd">Multi-select · select every tag evidenced in transcript · leave blank only if zero friction</div>
+      </div>
+      <span class="da" id="arr-d4">›</span>
+    </div>
+    <div class="db" id="d4">
+      <div class="col-head"><span class="ch">#</span><span class="ch">Tag value</span><span class="ch">AI tagging description</span></div>
+      <div class="sub">Caller behavior</div>
+      <div class="trow">
+        <span class="tc">19</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">Missed pivot opportunity</span>
+        <span class="tdesc">Caller had an opening to advance the call's purpose but did not act on it. Examples: practice confirms scheduling but caller ends call without confirming next steps; patient mentions they haven't scheduled and caller doesn't offer to help; wrong doctor name corrected but caller doesn't redirect; patient says they are unwell but caller doesn't offer to call back.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">20</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">Abandoned during hold / IVR</span>
+        <span class="tdesc">Caller gave name and purpose to a screener or IVR, was placed on hold, and transcript ends without a voicemail or live connection. Evidence: 'thanks, please stay on the line' → [transcript ends]. Always pair with D3=15.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">21</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">Failed to schedule when opening given</span>
+        <span class="tdesc">Practice or patient was clearly receptive and gave a direct opening to schedule, but no appointment was confirmed. Examples: office takes patient names and DOBs but no dates/times confirmed and no follow-up plan set; patient says 'yes I need to do that' and caller ends call. Distinct from tag 19 — specifically for explicit scheduling openings.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">22</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">Script deviation</span>
+        <span class="tdesc">Caller departed from approved script in a way that created confusion. Examples: 'your vehicle has a stay' instead of 'your hospital stay'; QA disclosure before context; wrong callback number read; caller stumbles and does not recover. Mispronounced provider names → also tag 24.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">23</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">DOB missing or unconfirmed</span>
+        <span class="tdesc">Caller spoke with a practice but did not collect or confirm patient DOB — required compliance step when scheduling through a practice. Does NOT apply to patient voicemails.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">24</span>
+        <span class="tag" style="background:#FAECE7;color:#712B13">Confusing wording / provider name issue</span>
+        <span class="tdesc">Provider name garbled, mispronounced, or distorted enough that recipient asked for clarification. Examples: 'oscillate amasa'; 'Trent guys'; 'Dr. Oz to liter'; 'Charleston Dedo.' Also applies when overall phrasing causes recipient to ask 'who is this?' or 'can you repeat that?' Multiple instances on one call still count as one tag.</span>
+      </div>
+      <div class="sub">Data / system gap</div>
+      <div class="trow">
+        <span class="tc">25</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Provider no longer at practice</span>
+        <span class="tdesc">Call revealed listed provider has left, retired, or is no longer at that practice. Evidence: 'she's not here anymore'; 'that doctor retired two years ago'; 'he moved to a different practice.' Tag regardless of whether the rest of the call was productive.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">26</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Appt completed — not in system</span>
+        <span class="tdesc">Practice or patient confirms appointment already occurred or is booked, but Pearl's worklist still shows patient as needing outreach. Always pair with D3=11.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">27</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Wrong / disconnected number</span>
+        <span class="tdesc">Phone number on record did not reach intended patient or practice. Examples: Legacy Insurance; home billing consultants; 'telephone number 808-...' recordings. Always pair with D2=9.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">28</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Patient not at practice</span>
+        <span class="tdesc">Patient no longer associated with listed practice. Distinct from tag 25 (provider left) — here the provider may still be at the practice but the patient record is misassigned. Evidence: 'we don't have a patient by that name'; 'I don't think she's our patient anymore.'</span>
+      </div>
+      <div class="trow">
+        <span class="tc">29</span>
+        <span class="tag" style="background:#FAEEDA;color:#633806">Edge case not covered by script</span>
+        <span class="tdesc">Call surfaced a situation the script does not address, leaving the caller without guidance. Known examples: patient is deceased (Oscar Acock); visit was not a hospital stay ('it was only a prestige' — Judith Lockhart); patient hostile/suspicious of Pearl's identity; caregiver cannot provide consent; patient re-hospitalized.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl">Layer 3 — Content & Sentiment</div>
+
+  <!-- D5 -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('d5')">
+      <div class="di" style="background:#E1F5EE"><i class="ti ti-mood-smile" style="color:#0F6E56;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">D5 · Overall call sentiment <span style="font-size:12px;font-weight:400;color:var(--color-text-tertiary)">tags 30–33</span></div>
+        <div class="dd">Exactly 1 required · assess the OTHER PARTY's response to Pearl, not Melissa's tone</div>
+      </div>
+      <span class="da" id="arr-d5">›</span>
+    </div>
+    <div class="db" id="d5">
+      <div class="col-head"><span class="ch">#</span><span class="ch">Tag value</span><span class="ch">AI tagging description</span></div>
+      <div class="trow">
+        <span class="tc">30</span>
+        <div class="sp" style="background:#EAF3DE"><span class="sd" style="background:#639922"></span><span style="color:#27500A">Positive</span></div>
+        <span class="tdesc">Other party responded with genuine active engagement — asked questions, expressed appreciation, confirmed willingness to act, or took a clear helpful action. Warm tone alone does not qualify; active engagement required. Calibration: practice takes all patient info and commits to scheduling; patient asks clarifying questions about the follow-up process.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">31</span>
+        <div class="sp" style="background:#F1EFE8"><span class="sd" style="background:#888780"></span><span style="color:#444441">Neutral</span></div>
+        <span class="tdesc">Interaction was transactional — other party neither engaged meaningfully nor resisted. Voicemails with no live contact → Neutral by default. A polite 'no thank you, goodbye' with no further engagement is Neutral, not Positive. Calibration: 'No, I don't. Thank you. Bye-bye.' (Lorraine); 'I'm fine. Thank you.' (Dinah Christy); any complete voicemail with no live response.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">32</span>
+        <div class="sp" style="background:#FCEBEB"><span class="sd" style="background:#E24B4A"></span><span style="color:#791F1F">Negative</span></div>
+        <span class="tdesc">Other party expressed frustration, distress, suspicion, dismissiveness, or impatience. Negativity must come from the other party — a difficult outcome (voicemail full, wrong number) with a neutral tone is NOT Negative. Calibration: 'I can't talk long, I'm not feeling well' (Judith Lockhart); curt dismissal (John Downey); call where patient death is disclosed.</span>
+      </div>
+      <div class="trow">
+        <span class="tc">33</span>
+        <div class="sp" style="background:#FAEEDA"><span class="sd" style="background:#BA7517"></span><span style="color:#633806">Mixed</span></div>
+        <span class="tdesc">Call contained meaningful BOTH positive and negative signals from the other party. Use when a single Positive or Negative tag would misrepresent the full call. Do NOT use as a default for 'I'm not sure' — requires evidence of BOTH signals. Calibration: practice warm and helpful but patient unreachable; patient friendly but declines scheduling; call starts well but ends with unexpected bad news.</span>
+      </div>
+      <div class="warn"><i class="ti ti-info-circle" style="font-size:14px;flex-shrink:0;margin-top:1px"></i>D5 reflects the other party's response to Pearl — not Melissa's tone. A polite decline = Neutral (31). A failed outcome with neutral tone = Neutral, not Negative.</div>
+    </div>
+  </div>
+
+  <!-- Dependency rules -->
+  <div class="dc">
+    <div class="dh" onclick="toggle('rules')">
+      <div class="di" style="background:#F1EFE8"><i class="ti ti-link" style="color:#5F5E5A;font-size:15px"></i></div>
+      <div style="flex:1">
+        <div class="dt">Cross-dimension dependency rules</div>
+        <div class="dd">Required pairs, forced chains, and forbidden combos</div>
+      </div>
+      <span class="da" id="arr-rules">›</span>
+    </div>
+    <div class="db" id="rules">
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.9">
+        <div style="display:grid;grid-template-columns:70px 1fr;gap:2px 12px">
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D1=4 (Unidentifiable) → D2 must be 8 AND D3 must be 18</span>
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D3=15 (Caller abandoned) → D4 must include 20</span>
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D3=11 (Appt already done) → D4 must include 26</span>
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D2=9 (Wrong number) → D4 must include 27</span>
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D2=5 (Practice staff) → D1 must be 1</span>
+          <span style="color:var(--color-text-success);font-weight:500">REQUIRED</span><span>D2=6 (Patient/family) → D1 must be 2</span>
+          <span style="color:var(--color-text-danger);font-weight:500">FORBIDDEN</span><span>D3=16 (Voicemail left) + D2=5 or D2=6 (live person answered)</span>
+          <span style="color:var(--color-text-danger);font-weight:500">FORBIDDEN</span><span>D2=7 (Voicemail complete) + D3=14 (Voicemail full)</span>
+          <span style="color:var(--color-text-warning);font-weight:500">CAUTION</span><span>If transcript contains 'mailbox is full' → D3=14, never D3=16</span>
+          <span style="color:var(--color-text-warning);font-weight:500">CAUTION</span><span>If scheduling opening given but no date confirmed → D4 must include 19 or 21</span>
+          <span style="color:var(--color-text-warning);font-weight:500">CAUTION</span><span>If deceased patient, non-hospital visit, or unscripted situation → D4 must include 29</span>
+          <span style="color:var(--color-text-warning);font-weight:500">CAUTION</span><span>D4 is multi-select — review all 11 friction tags (19–29) and apply every one evidenced</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(id){
+  const b=document.getElementById(id),a=document.getElementById('arr-'+id),o=b.classList.contains('open');
+  b.classList.toggle('open',!o);a.classList.toggle('open',!o);
+}
+</script>
